@@ -43,15 +43,15 @@ module "aws_eks" {
       source_security_group_id = var.source_security_group_id
     }
 
-    ingress_nodes_to_cluster_tcp = {
-      description                = "Allowing all traffic from vpc"
-      protocol                   = "-1"
-      from_port                  = 0
-      to_port                    = 0
-      type                       = "ingress"
+    #ingress_nodes_to_cluster_tcp = {
+      #description                = "Allowing all traffic from vpc"
+      #protocol                   = "-1"
+      #from_port                  = 0
+      #to_port                    = 0
+      #type                       = "ingress"
       #source_node_security_group = true
-      cidr_blocks                = ["10.100.20.0/22"]
-    }
+      #cidr_blocks                = ["10.100.20.0/22"]
+    #}
   }
 
   
