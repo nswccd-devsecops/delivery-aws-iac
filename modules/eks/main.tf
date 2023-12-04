@@ -45,9 +45,9 @@ module "aws_eks" {
 
     ingress_nodes_to_cluster_tcp = {
       description                = "Allowing all tcp traffic from node security group"
-      protocol                   = "tcp"
-      from_port                  = 1025
-      to_port                    = 65535
+      protocol                   = "-1"
+      from_port                  = 0
+      to_port                    = 0
       type                       = "ingress"
       source_node_security_group = true
     }
