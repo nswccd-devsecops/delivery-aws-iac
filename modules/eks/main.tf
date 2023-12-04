@@ -3,8 +3,8 @@
 #---------------------------------------------------------------
 
 module "aws_eks" {
-  #source = "git::https://github.com/terraform-aws-modules/terraform-aws-eks.git?ref=v19.13.1"
-  source = "git::https://github.com/terraform-aws-modules/terraform-aws-eks.git?ref=v19.20.0"
+  source = "git::https://github.com/terraform-aws-modules/terraform-aws-eks.git?ref=v19.13.1"
+  #source = "git::https://github.com/terraform-aws-modules/terraform-aws-eks.git?ref=v19.20.0"
 
   cluster_name    = local.cluster_name
   cluster_version = var.cluster_version
@@ -42,7 +42,18 @@ module "aws_eks" {
       type                     = "ingress"
       source_security_group_id = var.source_security_group_id
     }
+
+    ingress_nodes_to_cluster_tcp = {
+      description                = "Allowing all tcp traffic from node security group"
+      protocol                   = "tcp"
+      from_port                  = 1025
+      to_port                    = 65535
+      type                       = "ingress"
+      source_node_security_group = true
+    }
   }
+
+  
 
   create_aws_auth_configmap = var.create_aws_auth_configmap
   manage_aws_auth_configmap = var.manage_aws_auth_configmap
