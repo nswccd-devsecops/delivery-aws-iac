@@ -11,7 +11,8 @@ module "aws_eks" {
   cluster_version = var.cluster_version
 
   vpc_id                          = var.vpc_id
-  subnet_ids                      = var.private_subnet_ids
+  private_subnet_ids              = var.private_subnet_ids
+  cidr_blocks                     = var.cidr_blocks
   control_plane_subnet_ids        = var.control_plane_subnet_ids
   iam_role_permissions_boundary   = var.iam_role_permissions_boundary
   cluster_endpoint_public_access  = var.cluster_endpoint_public_access
