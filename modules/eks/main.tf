@@ -2,6 +2,31 @@
 # EKS Blueprints
 #---------------------------------------------------------------
 
+resource "aws_security_group" "eks_cluster_allow" {
+  name = "allow_cluster_communitcation"
+  description = "allow_cluster_communitcation"
+  vpc_id = local.vpc_id
+
+  ingress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = local.vpc_cidr_blocks
+  }
+
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "staging"
+  }
+}
+
+
 module "aws_eks" {
   source = "git::https://github.com/terraform-aws-modules/terraform-aws-eks.git?ref=v19.13.1"
   #source = "git::https://github.com/terraform-aws-modules/terraform-aws-eks.git?ref=v19.20.0"
@@ -9,6 +34,9 @@ module "aws_eks" {
 
   cluster_name    = local.cluster_name
   cluster_version = var.cluster_version
+
+  cluster_security_group_id       = aws_security_group.eks_cluster_allow.id
+  create_cluster_security_group   = false
 
   vpc_id                          = var.vpc_id
   subnet_ids              = var.private_subnet_ids
