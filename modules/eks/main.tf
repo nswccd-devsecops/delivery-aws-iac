@@ -5,13 +5,13 @@
 resource "aws_security_group" "eks_cluster_allow" {
   name = "allow_cluster_communitcation"
   description = "allow_cluster_communitcation"
-  vpc_id = local.vpc_id
+  vpc_id = var.vpc_id
 
   ingress {
     from_port = 0
     to_port = 0
     protocol = "-1"
-    cidr_blocks = local.vpc_cidr_blocks
+    cidr_blocks = var.cidr_blocks
   }
 
   egress {
