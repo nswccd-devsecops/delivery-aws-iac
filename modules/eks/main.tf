@@ -86,7 +86,17 @@ module "aws_eks" {
     #}
   }
 
-  
+  node_security_group_additional_rules = {
+    # calico-apiserver
+    ingress_cluster_5443_webhook = {
+      description                   = "Cluster API to node 5443/tcp webhook"
+      protocol                      = "tcp"
+      from_port                     = 5443
+      to_port                       = 5443
+      type                          = "ingress"
+      source_cluster_security_group = true
+    }
+  } 
 
   create_aws_auth_configmap = var.create_aws_auth_configmap
   manage_aws_auth_configmap = var.manage_aws_auth_configmap
