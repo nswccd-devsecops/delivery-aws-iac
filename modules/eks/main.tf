@@ -96,6 +96,16 @@ module "aws_eks" {
       type                          = "ingress"
       source_cluster_security_group = true
     }
+
+    # istio
+    ingress_cluster_15017_webhook = {
+      description                   = "Cluster API to node 15017/tcp webhook"
+      protocol                      = "tcp"
+      from_port                     = 15017
+      to_port                       = 15017
+      type                          = "ingress"
+      source_cluster_security_group = true
+    }
   } 
 
   create_aws_auth_configmap = var.create_aws_auth_configmap
